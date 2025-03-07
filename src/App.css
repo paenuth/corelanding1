@@ -1,0 +1,599 @@
+/* src/App.css */
+
+/* Modern Gaming UI Theme */
+:root {
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --primary-light: #a78bfa;
+  --dark: #0f172a;
+  --darker: #020617;
+  --light: #f8fafc;
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
+  --gray: #475569;
+  --light-gray: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  background: var(--darker);
+  color: var(--light);
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-content h2 {
+  color: var(--light);
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.75rem;
+}
+
+/* Wallet Button */
+.wallet-button {
+  background: linear-gradient(90deg, var(--primary-dark), var(--accent-dark));
+  color: var(--light);
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.wallet-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.wallet-button:active {
+  transform: translateY(1px);
+}
+
+/* Hero Section */
+#hero {
+  text-align: center;
+  padding: 12rem 1rem 12rem; /* Increased padding to make section bigger */
+  background: radial-gradient(circle at center, var(--dark) 0%, var(--darker) 80%);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 4rem;
+  min-height: 60vh; /* Make sure it takes up the whole screen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero p {
+  font-size: 1.3rem; 
+  margin-bottom: 2rem; 
+  font-weight: 500;
+}
+
+#hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.1;
+}
+
+#hero h1 {
+  font-size: 7rem; 
+  margin-bottom: -.6rem; 
+  margin-top: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--primary-light), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Play Button */
+.play-button {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: white;
+  padding: 1.2rem 3.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1px;
+  margin-top: 1rem; /* margin to separate from text */
+}
+
+.play-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(139, 92, 246, 0.5);
+}
+
+.play-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+}
+
+.play-button::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: transform 0.6s ease;
+  transform: translateX(-100%);
+}
+
+.play-button:hover::after {
+  transform: translateX(100%);
+}
+
+/* How to Play Section */
+#how-to-play {
+  padding: 4rem 2rem 13rem; 
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#how-to-play h2 {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-light);
+}
+
+.instructions-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.instruction-card {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 280px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1;
+  max-width: 280px;
+}
+
+.instruction-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+}
+
+.instruction-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.instruction-card p {
+  color: var(--light-gray);
+}
+
+.instruction-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+/* Team Section */
+#developers {
+  padding: 6rem 2rem;
+  background: var(--dark);
+  text-align: center;
+}
+
+#developers h2 {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-light);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem; /* Correct space between cards */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.developer-card {
+  background: rgba(15, 23, 42, 0.5);
+  padding: 2rem 1.5rem; /* Reduced padding to make cards smaller */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  height: auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.developer-card::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(45deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+  transform: translateY(100%);
+  transition: transform 0.5s ease;
+  z-index: -1;
+}
+
+.developer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.developer-card:hover::before {
+  transform: translateY(0);
+}
+
+.avatar-placeholder {
+  width: 120px; 
+  height: 120px; 
+  background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem; /* Slightly smaller font */
+  color: var(--light);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.avatar-placeholder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.developer-card h3 {
+  font-size: 1.5rem; 
+  margin: 0.75rem 0 0.5rem;
+  font-weight: 600;
+  color: var(--light);
+}
+
+.developer-card p {
+  color: var(--light-gray);
+  font-size: 1rem; 
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  max-width: 100%; /* Ensure text doesn't overflow */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .team-grid {
+    max-width: 900px;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .team-grid {
+    max-width: 800px;
+    gap: 1.5rem;
+  }
+  
+  .developer-card {
+    padding: 1.75rem 1.5rem;
+  }
+  
+  .avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 500px;
+  }
+  
+  .developer-card {
+    padding: 2rem;
+    min-width: unset;
+  }
+  
+  .avatar-placeholder {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* Fix for extremely small screens */
+@media (max-width: 480px) {
+  #developers {
+    padding: 4rem 1rem;
+  }
+  
+  .team-grid {
+    gap: 1.25rem;
+    padding: 0;
+  }
+  
+  .developer-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .avatar-placeholder {
+    width: 90px;
+    height: 90px;
+    font-size: 2rem;
+  }
+  
+  .developer-card h3 {
+    font-size: 1.35rem;
+  }
+  
+  .developer-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Roadmap Section */
+#roadmap {
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, var(--dark) 0%, var(--darker) 100%);
+  text-align: center;
+}
+
+#roadmap h2 {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-light);
+}
+
+.roadmap-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.roadmap-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  transform: translateX(-50%);
+}
+
+.phase-card {
+  width: calc(50% - 30px);
+  margin: 2rem 0;
+  position: relative;
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.phase-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+}
+
+.phase-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.phase-card:nth-child(odd) {
+  left: 0;
+}
+
+.phase-card:nth-child(even) {
+  left: calc(50% + 30px);
+}
+
+.phase-card:nth-child(odd)::after {
+  right: -40px;
+}
+
+.phase-card:nth-child(even)::after {
+  left: -40px;
+}
+
+.phase-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.phase-card h3 span {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: var(--light);
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.phase-card p {
+  color: var(--light-gray);
+  margin-bottom: 1rem;
+}
+
+.phase-card ul {
+  color: var(--light-gray);
+  padding-left: 1.5rem;
+  margin-bottom: 0;
+}
+
+.phase-card ul li {
+  margin-bottom: 0.5rem;
+}
+
+.phase-card ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .roadmap-container::before {
+    left: 30px;
+  }
+
+  .phase-card {
+    width: calc(100% - 80px);
+    left: 80px !important;
+  }
+
+  .phase-card::after {
+    left: -40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero h1 {
+    font-size: 3rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .instructions-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .instruction-card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .nav-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .wallet-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .play-button {
+    padding: 1rem 2.5rem;
+  }
+}
+
+/* Footer */
+footer {
+  background: var(--darker);
+  padding: 2rem;
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+footer a {
+  color: var(--primary-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
