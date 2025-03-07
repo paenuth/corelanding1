@@ -17,10 +17,12 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMetaMask, setHasMetaMask] = useState(true);
   const navigate = useNavigate();
+  
   const truncateAddress = (address) => {
     if (!address) return '';
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
   };
+  
   // Check if MetaMask is installed
   useEffect(() => {
     if (window.ethereum) {
@@ -29,6 +31,29 @@ export default function Login() {
       setHasMetaMask(false);
     }
   }, []);
+
+  // Monitor for account changes to navigate to dashboard
+  useEffect(() => {
+    if (active && account) {
+      // Store the actual wallet address
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('loginMethod', 'wallet');
+      localStorage.setItem('userWallet', account);
+      
+      // Log wallet info
+      console.log("Connected to wallet:", account);
+      console.log("Connected to network:", library?.network?.name);
+      
+      // Dispatch custom event to update Navbar
+      window.dispatchEvent(new Event('loginStatusChanged'));
+      
+      // Navigate to dashboard after successful login
+      navigate('/dashboard');
+      
+      // Reset loading state
+      setIsLoading(false);
+    }
+  }, [active, account, library, navigate]);
 
   // Switch to CORE Testnet
   const switchToTestnet = async () => {
@@ -50,14 +75,14 @@ export default function Login() {
             params: [
               {
                 chainId: '0x45A',
-                chainName: 'CORE Testnet',
+                chainName: 'Core Blockchain Testnet2',
                 nativeCurrency: {
                   name: 'CORE',
-                  symbol: 'CORE',
+                  symbol: 'tCORE2',
                   decimals: 18
                 },
-                rpcUrls: ['https://rpc.test.btcs.network/'],
-                blockExplorerUrls: ['https://scan.test.btcs.network/']
+                rpcUrls: ['https://rpc.test2.btcs.network'],
+                blockExplorerUrls: ['https://scan.test2.btcs.network']
               },
             ],
           });
@@ -90,32 +115,12 @@ export default function Login() {
         return;
       }
       
-      // Then activate the wallet
+      // Then activate the wallet - we'll let the useEffect handle the rest
       await activate(injected);
       
-      // Wait briefly for the connection to establish
-      setTimeout(() => {
-        // Check if connection was successful
-        if (active) {
-          // Store the actual wallet address instead of just 'wallet'
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('loginMethod', 'wallet');
-          localStorage.setItem('userWallet', account); // Store the actual address
-          
-          // You can also log some wallet info
-          console.log("Connected to wallet:", account);
-          console.log("Connected to network:", library?.network?.name);
-          
-          // Dispatch custom event to update Navbar
-          window.dispatchEvent(new Event('loginStatusChanged'));
-          
-          // Navigate to dashboard after successful login
-          navigate('/dashboard');
-        } else {
-          alert('Wallet connection failed. Please try again.');
-        }
-        setIsLoading(false);
-      }, 1000);
+      // Note: We removed the setTimeout and active check here
+      // The useEffect above will handle navigation once active and account are available
+      
     } catch (error) {
       console.error('Connection error:', error);
       alert('Failed to connect wallet. Please try again.');
@@ -129,9 +134,6 @@ export default function Login() {
     try {
       // In a real implementation, you would use Firebase Auth or a similar service
       // For demonstration, we'll create a pre-generated wallet for CORE blockchain
-      
-      // Generate a deterministic wallet address based on a user identifier
-      // This is a simplified example - in production, you should use proper key derivation
       
       // Simulate API call to generate a wallet
       const response = await generateWalletForUser("google-user-id");
@@ -159,13 +161,11 @@ export default function Login() {
   };
 
   // Function to simulate wallet generation
-  // In production, this would be a backend API call
   const generateWalletForUser = async (userId) => {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     // In a real implementation, this would be generated securely on the backend
-    // and would involve actual cryptographic wallet creation
     const walletAddress = '0x' + Array(40).fill(0).map(() => 
       Math.floor(Math.random() * 16).toString(16)).join('');
     
