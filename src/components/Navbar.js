@@ -1,10 +1,9 @@
-// src/components/Navbar.js (revised)
+// src/components/Navbar.js
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Core Chain IDs
 const CORE_MAINNET = 1116;
 const CORE_TESTNET = 1114;
 
@@ -13,18 +12,18 @@ const injected = new InjectedConnector({
 });
 
 export default function Navbar() {
-  const { activate, deactivate, active } = useWeb3React(); // Removed unused 'account' and 'chainId'
+  const { activate, deactivate, active } = useWeb3React();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // Check if user was logged in previously
+  // Check login status whenever localStorage changes
   useEffect(() => {
-    const loggedInStatus = localStorage.getItem('isLoggedIn');
-    if (loggedInStatus === 'true') {
-      setIsLoggedIn(true);
+    const checkLoginStatus = () => {
+      const loggedInStatus = localStorage.getItem('isLoggedIn');
+      setIsLoggedIn(loggedInStatus === 'true');
       
       // If they were using wallet, reconnect it
-      if (localStorage.getItem('loginMethod') === 'wallet') {
+      if (loggedInStatus === 'true' && localStorage.getItem('loginMethod') === 'wallet' && !active) {
         const connectWalletOnPageLoad = async () => {
           try {
             await activate(injected);
@@ -34,8 +33,22 @@ export default function Navbar() {
         };
         connectWalletOnPageLoad();
       }
-    }
-  }, [activate]);
+    };
+
+    // Check on component mount
+    checkLoginStatus();
+
+    // Add event listener for storage changes
+    window.addEventListener('storage', checkLoginStatus);
+    
+    // Create a custom event listener for login changes
+    window.addEventListener('loginStatusChanged', checkLoginStatus);
+
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('loginStatusChanged', checkLoginStatus);
+    };
+  }, [activate, active]);
 
   const handlePlayNow = () => {
     if (!isLoggedIn) {
@@ -45,7 +58,6 @@ export default function Navbar() {
     }
   };
 
-  // Logout function
   const handleLogout = () => {
     if (active) {
       deactivate();
@@ -54,6 +66,8 @@ export default function Navbar() {
     localStorage.removeItem('loginMethod');
     localStorage.removeItem('userWallet');
     setIsLoggedIn(false);
+    // Dispatch custom event
+    window.dispatchEvent(new Event('loginStatusChanged'));
     navigate('/');
   };
 

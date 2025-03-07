@@ -9,22 +9,7 @@ const placeholderNFTs = [
     id: 1,
     name: "Speed Master Badge",
     image: "🏃‍♂️",
-    description: "This badge increases your character's speed by 15%.",
-    rarity: "Uncommon"
-  },
-  {
-    id: 2,
-    name: "Shield Guardian",
-    image: "🛡️",
-    description: "Provides a 10% damage reduction from all sources.",
-    rarity: "Rare"
-  },
-  {
-    id: 3,
-    name: "Power Striker",
-    image: "⚡",
-    description: "Your attacks deal 20% more damage to enemies.",
-    rarity: "Epic"
+    description: "This badge increases your character's speed by 15%."
   }
 ];
 
@@ -86,7 +71,6 @@ export default function Dashboard() {
               <div className="nft-image">{nft.image}</div>
               <div className="nft-info">
                 <h3>{nft.name}</h3>
-                <span className={`nft-rarity ${nft.rarity.toLowerCase()}`}>{nft.rarity}</span>
                 <p>{nft.description}</p>
               </div>
             </div>

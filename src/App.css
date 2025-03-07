@@ -1004,3 +1004,17 @@ footer a:hover {
     padding: 1rem;
   }
 }
+
+.connection-status {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.connection-status.success {
+  background-color: rgba(0, 200, 83, 0.1);
+  color: #00c853;
+  border: 1px solid rgba(0, 200, 83, 0.3);
+}
