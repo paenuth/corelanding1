@@ -1,8 +1,21 @@
+// src/App.js
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Web3ReactProvider } from '@web3-react/core';
+import { Web3Provider } from '@ethersproject/providers';
 import './App.css';
 import Navbar from './components/Navbar';
 import PlayButton from './components/PlayButton';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
-function App() {
+// Function to get library from provider for Web3React
+function getLibrary(provider) {
+  const library = new Web3Provider(provider);
+  library.pollingInterval = 12000;
+  return library;
+}
+
+function Home() {
   // Team members data with roles
   const teamMembers = [
     {
@@ -28,12 +41,10 @@ function App() {
   ];
 
   return (
-    <div className="App">
-      <Navbar />
-      
+    <>
       <section id="hero">
         <h1>Escape The Chasm</h1>
-        <p>Connect your wallet and start playing our CORE blockchain game!</p>
+        <p>Sign in and start playing our CORE blockchain game!</p>
         <PlayButton />
       </section>
       
@@ -122,11 +133,30 @@ function App() {
           </div>
         </div>
       </section>
-      
-      <footer>
-        <p>© 2025 Escape the Chasm | Built on <a href="https://www.coredao.org/">Core Chain</a></p>
-      </footer>
-    </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Router>
+        <div className="App">
+          <Navbar />
+          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+          
+          <footer>
+            <p>© 2025 Escape the Chasm | Built on <a href="https://www.coredao.org/">Core Chain</a></p>
+          </footer>
+        </div>
+      </Router>
+    </Web3ReactProvider>
   );
 }
 

@@ -1,7 +1,8 @@
-// src/components/Navbar.js
+// src/components/Navbar.js (revised)
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Core Chain IDs
 const CORE_MAINNET = 1116;
@@ -12,61 +13,71 @@ const injected = new InjectedConnector({
 });
 
 export default function Navbar() {
-  const { activate, deactivate, active, account, chainId } = useWeb3React();
+  const { activate, deactivate, active } = useWeb3React(); // Removed unused 'account' and 'chainId'
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  // Check if wallet was connected previously
+  // Check if user was logged in previously
   useEffect(() => {
-    const connectWalletOnPageLoad = async () => {
-      if (localStorage.getItem('isWalletConnected') === 'true') {
-        try {
-          await activate(injected);
-        } catch (error) {
-          console.error('Failed to connect on page load:', error);
-          localStorage.removeItem('isWalletConnected');
-        }
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    if (loggedInStatus === 'true') {
+      setIsLoggedIn(true);
+      
+      // If they were using wallet, reconnect it
+      if (localStorage.getItem('loginMethod') === 'wallet') {
+        const connectWalletOnPageLoad = async () => {
+          try {
+            await activate(injected);
+          } catch (error) {
+            console.error('Failed to connect wallet on page load:', error);
+          }
+        };
+        connectWalletOnPageLoad();
       }
-    };
-    connectWalletOnPageLoad();
+    }
   }, [activate]);
 
-  // Connect wallet function
-  const connectWallet = async () => {
-    try {
-      await activate(injected);
-      localStorage.setItem('isWalletConnected', 'true');
-    } catch (error) {
-      console.error('Connection error:', error);
+  const handlePlayNow = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      navigate('/dashboard');
     }
   };
 
-  // Disconnect wallet function
-  const disconnectWallet = () => {
-    try {
+  // Logout function
+  const handleLogout = () => {
+    if (active) {
       deactivate();
-      localStorage.removeItem('isWalletConnected');
-    } catch (error) {
-      console.error('Disconnect error:', error);
     }
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loginMethod');
+    localStorage.removeItem('userWallet');
+    setIsLoggedIn(false);
+    navigate('/');
   };
-
-  // Check if connected to Core Chain
-  const isConnectedToCore = 
-    active && (chainId === CORE_MAINNET || chainId === CORE_TESTNET);
 
   return (
     <nav className="navbar">
       <div className="nav-content">
-        <h2>CORE</h2>
-        <button
-          onClick={active ? disconnectWallet : connectWallet}
-          className="wallet-button"
-        >
-          {active 
-            ? isConnectedToCore
-              ? `${account.substring(0,6)}...${account.substring(account.length-4)}`
-              : 'Switch to Core Chain'
-            : 'Connect Wallet'}
-        </button>
+        <h2 onClick={() => navigate('/')} style={{cursor: 'pointer'}}>CORE</h2>
+        <div>
+          {isLoggedIn && (
+            <button 
+              onClick={() => navigate('/dashboard')} 
+              className="dashboard-button"
+              style={{marginRight: '1rem'}}
+            >
+              Go to Dashboard
+            </button>
+          )}
+          <button
+            onClick={isLoggedIn ? handleLogout : handlePlayNow}
+            className="wallet-button"
+          >
+            {isLoggedIn ? 'Logout' : 'Play Now'}
+          </button>
+        </div>
       </div>
     </nav>
   );
