@@ -15,6 +15,10 @@ export default function Navbar() {
   const { activate, deactivate, active } = useWeb3React();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const handleHomeClick = () => {
+    window.scrollTo(0, 0);
+    navigate('/');
+  };
 
   // Check login status whenever localStorage changes
   useEffect(() => {
@@ -58,6 +62,12 @@ export default function Navbar() {
     }
   };
 
+  const handleDashboardClick = () => {
+    // Reset scroll position before navigating
+    window.scrollTo(0, 0);
+    navigate('/dashboard');
+  };
+
   const handleLogout = () => {
     if (active) {
       deactivate();
@@ -74,11 +84,12 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-content">
-        <h2 onClick={() => navigate('/')} style={{cursor: 'pointer'}}>CORE</h2>
+        <h2 onClick={handleHomeClick} style={{cursor: 'pointer'}}>CORE</h2>
+
         <div>
           {isLoggedIn && (
             <button 
-              onClick={() => navigate('/dashboard')} 
+              onClick={handleDashboardClick}
               className="dashboard-button"
               style={{marginRight: '1rem'}}
             >

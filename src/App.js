@@ -1,4 +1,5 @@
 // src/App.js
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
@@ -8,6 +9,7 @@ import PlayButton from './components/PlayButton';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 
+
 // Function to get library from provider for Web3React
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -16,6 +18,24 @@ function getLibrary(provider) {
 }
 
 function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const loggedInStatus = localStorage.getItem('isLoggedIn');
+      setIsLoggedIn(loggedInStatus === 'true');
+    };
+
+    checkLoginStatus();
+    window.addEventListener('loginStatusChanged', checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus);
+
+    return () => {
+      window.removeEventListener('loginStatusChanged', checkLoginStatus);
+      window.removeEventListener('storage', checkLoginStatus);
+    };
+  }, []);
+  
   // Team members data with roles
   const teamMembers = [
     {
@@ -45,7 +65,8 @@ function Home() {
       <section id="hero">
         <h1>Escape The Chasm</h1>
         <p>Sign in and start playing our CORE blockchain game!</p>
-        <PlayButton />
+        {/* Pass isLoggedIn state to PlayButton */}
+        <PlayButton isLoggedIn={isLoggedIn} />
       </section>
       
       <section id="how-to-play">
