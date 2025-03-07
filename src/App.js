@@ -1,4 +1,3 @@
-// src/App.js
 import './App.css';
 import Navbar from './components/Navbar';
 import PlayButton from './components/PlayButton';
@@ -79,8 +78,8 @@ function App() {
         <h2>Development Roadmap</h2>
         <div className="roadmap-container">
           <div className="phase-card">
-            <h3><span>1</span>Foundation Phase</h3>
-            <p>Establishing the core mechanics and infrastructure.</p>
+            <h3><span>Q1</span>Pre-Launch & Soft Launch</h3>
+            <p>Foundation Phase - Establishing the core mechanics and infrastructure.</p>
             <ul>
               <li>Develop game prototype with basic mechanics</li>
               <li>Implement wallet connection functionality</li>
@@ -90,46 +89,35 @@ function App() {
           </div>
           
           <div className="phase-card">
-            <h3><span>2</span>Core Gameplay</h3>
-            <p>Building and refining the main gameplay features.</p>
+            <h3><span>Q2</span>Launch</h3>
+            <p>Initial Game Release - Launch core game levels with full tokenomics integration.</p>
             <ul>
-              <li>Launch beta version with key features</li>
-              <li>Implement token rewards system</li>
-              <li>Add progressive difficulty levels</li>
-              <li>Create leaderboard functionality</li>
+              <li>Buy power-ups and boosters with crypto</li>
+              <li>Customize weapon upgrades with stars</li>
+              <li>Trade stars and NFT badges in a marketplace</li>
+              <li>Access unique new levels</li>
             </ul>
           </div>
           
           <div className="phase-card">
-            <h3><span>3</span>Multiplayer Integration</h3>
-            <p>Adding social and competitive features.</p>
+            <h3><span>Q3</span>Expansion</h3>
+            <p>Social Features & Leaderboards - Roll out competitive features and exclusive content.</p>
             <ul>
-              <li>Develop real-time multiplayer capabilities</li>
-              <li>Implement in-game chat functionality</li>
-              <li>Create tournament structure</li>
-              <li>Add friend system and team battles</li>
+              <li>Compete on leaderboards with NFT badges and stars</li>
+              <li>Unlock exclusive levels with special badges</li>
+              <li>Earn royalties from NFTs</li>
+              <li>Enjoy trading cooldowns for a fair market</li>
             </ul>
           </div>
           
           <div className="phase-card">
-            <h3><span>4</span>Economy Expansion</h3>
-            <p>Developing a robust in-game economy.</p>
+            <h3><span>Q4</span>Sustained Growth</h3>
+            <p>New NFT Series & Seasonal Events - Drive engagement while maintaining long-term interest.</p>
             <ul>
-              <li>Launch NFT collectibles</li>
-              <li>Implement marketplace for trading items</li>
-              <li>Create staking mechanisms</li>
-              <li>Develop governance token system</li>
-            </ul>
-          </div>
-          
-          <div className="phase-card">
-            <h3><span>5</span>Metaverse Integration</h3>
-            <p>Expanding beyond the game into wider applications.</p>
-            <ul>
-              <li>Create 3D social spaces</li>
-              <li>Implement cross-game asset compatibility</li>
-              <li>Develop SDK for community-created content</li>
-              <li>Partner with other Core ecosystem projects</li>
+              <li>Launch limited-edition NFT badges for events and tournaments</li>
+              <li>Monitor and adjust in-game economic metrics for stability</li>
+              <li>Expand marketplace based on community feedback</li>
+              <li>Integrate with external platforms for broader visibility</li>
             </ul>
           </div>
         </div>
