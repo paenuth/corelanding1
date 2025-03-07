@@ -86,6 +86,55 @@ body {
   transform: translateY(1px);
 }
 
+/* Wallet Warning */
+
+.wallet-warning {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 193, 7, 0.1); 
+  border-left: 4px solid #ffc107;
+  border-radius: px;
+  padding: 2px 16px; 
+  margin: 0 0 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wallet-warning-icon {
+  color: #ffc107;
+  font-size: 20px;
+  margin-right: 10px; 
+  display: flex;
+  align-items: center;
+}
+
+.wallet-warning p {
+  margin: 30px 0 0 0; 
+  font-size: 14px;
+  line-height: 1.4;
+  color: #e2e2e2;
+  flex: 1;
+  text-align: left;
+}
+
+.wallet-warning a {
+  color: #42a5f5;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.wallet-warning a:hover {
+  color: #64b5f6;
+  text-decoration: underline;
+}
+
+/* Adjust the disabled button styles */
+.wallet-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Hero Section */
 #hero {
   text-align: center;
@@ -598,7 +647,7 @@ footer a:hover {
   color: var(--accent);
 }
 
-/* Dashboard and Login Styles - Add to App.css */
+/* Dashboard and Login Styles - App.css */
 
 /* Login Page Styles */
 .login-container {

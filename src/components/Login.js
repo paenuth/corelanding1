@@ -1,4 +1,4 @@
-// src/components/Login.js
+// src/components/Dashboard.js
 import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
@@ -195,15 +195,18 @@ export default function Login() {
         </div>
         
         {!hasMetaMask && (
-          <div className="wallet-warning">
-            No wallet extension found. Please install MetaMask and try again.
-          </div>
+        <div className="wallet-warning">
+        <div className="wallet-warning-icon">⚠️</div>
+        <p>
+          No wallet extension found. <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer">Install MetaMask</a> to continue.
+        </p>
+      </div>
         )}
         
         <button 
           className="wallet-login-btn" 
           onClick={handleWalletLogin}
-          disabled={isLoading}
+          disabled={isLoading || !hasMetaMask}
         >
           <span>🦊</span> Connect Wallet
           {isLoading && <span className="loading-spinner"></span>}
